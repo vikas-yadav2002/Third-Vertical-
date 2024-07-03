@@ -1,6 +1,6 @@
 const slider = document.querySelector('.slider');
 const testimonials = document.querySelectorAll('.testimonial');
-const testimonialWidth = 100 / 3;
+const testimonialWidth = 100 / 2.799;
 let currentIndex = 0;
 let startX;
 let isDragging = false;
@@ -13,7 +13,7 @@ const lastClone = testimonials[testimonials.length - 1].cloneNode(true);
 slider.appendChild(firstClone);
 slider.insertBefore(lastClone, testimonials[0]);
 
-// Adjust slider position to hide the last clone
+// Adjust slider position to show the first three testimonials
 slider.style.transform = `translateX(-${testimonialWidth}%)`;
 
 function slide(direction) {
@@ -27,7 +27,7 @@ function updateSliderPosition(smooth = false) {
     } else {
         slider.style.transition = 'none';
     }
-    slider.style.transform = `translateX(-${(currentIndex + 1) * testimonialWidth}%)`;
+    slider.style.transform = `translateX(-${(currentIndex + 1) * testimonialWidth }%)`;
 
     // If we've moved to the clone slide, wait for transition to end then jump to the real slide
     if (smooth) {
@@ -48,7 +48,7 @@ function autoSlide() {
 }
 
 // Set up auto-sliding every 5 seconds
-const autoSlideInterval = setInterval(autoSlide, 3000);
+const autoSlideInterval = setInterval(autoSlide, 5000);
 
 // Mouse events for dragging
 slider.addEventListener('mousedown', (e) => {
@@ -97,7 +97,7 @@ slider.addEventListener('touchmove', (e) => {
     const x = e.touches[0].pageX - slider.offsetLeft;
     const walk = (x - startX) / slider.offsetWidth * 100;
     slider.style.transition = 'none';
-    slider.style.transform = `translateX(${-(currentIndex + 1) * testimonialWidth + walk}%)`;
+    slider.style.transform = `translateX(${-(currentIndex + 1) * testimonialWidth + walk + 10}%)`;
 });
 
 slider.addEventListener('touchend', finishDragging);
