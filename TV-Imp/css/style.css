@@ -3309,6 +3309,7 @@ button.mfp-arrow {
 @media screen and (max-width: 991px) {
     .testimonials-box {
         margin-bottom: 90px;
+        height: 50vh;
         padding: 35px 20px;
     }
 }
@@ -5334,13 +5335,15 @@ hr.border-2 {
 }
 .testimonials-button button{
     width: 150px;
+    color: white;
     border: none;
     border-radius: 30px;
     height: 50px;
     font-size: 1.1rem;
 }
 .testimonials-button button:hover{
-    scale: 1.1;
+    /* scale: 1.1; */
+    color: black
 }
 
 @media screen and (max-width: 500px) {
