@@ -432,11 +432,14 @@ blockquote cite:before {
 
 
 /* ======= Owl-Theme custom style ======= */
+
 .owl-theme .owl-nav.disabled + .owl-dots {
-    margin-top: 0px;
+    margin-top: 30px;
     line-height: .7;
     display: block;
 }
+
+
 .owl-theme .owl-dots .owl-dot span {
     width: 8px;
     height: 8px;
@@ -3277,10 +3280,11 @@ button.mfp-arrow {
 
 /* testimonials style */
 .testimonials-box {
+    height: 60vh;
     position: relative;
     background: #fff;
     padding: 60px 45px;
-    margin-bottom: -90px;
+    margin-bottom: -2px;
 }
 .testimonials-box .head-box h6 {
     font-weight: 400;
@@ -5301,4 +5305,47 @@ hr.border-2 {
     font-size: 0.9em;
 }
 
-/* new */
+/* new testimonials */
+
+.head-box{
+    width: 40%;
+}
+
+/* .head-box h4{
+    font-size: 3rem;
+} */
+
+.para{
+    color: white;
+}
+.testimonials-heading h1 span{
+  color: #cb9e00;
+  font-weight: 600;
+
+}
+/* .testimonials-subheading h4{
+    color: #cb9e00;
+} */
+.testimonials-button{
+    display: flex;
+
+    align-items: center;
+    margin-top: 20px;
+}
+.testimonials-button button{
+    width: 150px;
+    border: none;
+    border-radius: 30px;
+    height: 50px;
+    font-size: 1.1rem;
+}
+.testimonials-button button:hover{
+    scale: 1.1;
+}
+
+@media screen and (max-width: 500px) {
+   .head-box{
+    margin: 20px;
+    width: 80%;
+   }
+}
