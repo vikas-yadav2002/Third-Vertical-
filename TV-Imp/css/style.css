@@ -5352,3 +5352,24 @@ hr.border-2 {
     width: 80%;
    }
 }
+
+/* services */
+.coloredCard{
+    background-color: #CB9E00;
+}
+.coloredCard .item:hover{
+    background-color: #cb9e00;
+}
+.coloredCard .item .line{
+    color: white;
+}
+.coloredCard .item:hover{
+    .numb{
+        color: white;
+    }
+    
+} 
+
+.margin-below{
+    margin-bottom: 40px;
+}
