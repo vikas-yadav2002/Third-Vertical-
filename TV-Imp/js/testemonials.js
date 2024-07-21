@@ -1,103 +1,67 @@
-const slider = document.querySelector('.slider');
-const testimonials = document.querySelectorAll('.testimonial');
-const testimonialWidth = 100 / 2.799;
-let currentIndex = 0;
-let startX;
-let isDragging = false;
+document.addEventListener("DOMContentLoaded", function() {
+    let currentIndex = 0;
+    const items = document.querySelectorAll(".testimonial-item");
+    const totalItems = items.length;
 
-// Clone first and last slides
-const firstClone = testimonials[0].cloneNode(true);
-const lastClone = testimonials[testimonials.length - 1].cloneNode(true);
-
-// Append clones to the slider
-slider.appendChild(firstClone);
-slider.insertBefore(lastClone, testimonials[0]);
-
-// Adjust slider position to show the first three testimonials
-slider.style.transform = `translateX(-${testimonialWidth}%)`;
-
-function slide(direction) {
-    currentIndex += direction;
-    updateSliderPosition(true);
-}
-
-function updateSliderPosition(smooth = false) {
-    if (smooth) {
-        slider.style.transition = 'transform 0.3s ease-out';
-    } else {
-        slider.style.transition = 'none';
+    function showNextItem() {
+        items[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + 1) % totalItems;
+        items[currentIndex].classList.add("active");
     }
-    slider.style.transform = `translateX(-${(currentIndex + 1) * testimonialWidth }%)`;
 
-    // If we've moved to the clone slide, wait for transition to end then jump to the real slide
-    if (smooth) {
-        setTimeout(() => {
-            if (currentIndex === -1) {
-                currentIndex = testimonials.length - 1;
-                updateSliderPosition(false);
-            } else if (currentIndex === testimonials.length) {
-                currentIndex = 0;
-                updateSliderPosition(false);
-            }
-        }, 300);
+    setInterval(showNextItem, 5000); // Change slide every 5 seconds
+});
+
+
+$(document).ready(function(){
+    console.log("Document ready");
+    
+    var $carousel = $(".projects .owl-carousel");
+    
+    if ($carousel.length === 0) {
+      console.error("Carousel element not found");
+      return;
     }
-}
-
-function autoSlide() {
-    slide(1);
-}
-
-// Set up auto-sliding every 5 seconds
-const autoSlideInterval = setInterval(autoSlide, 5000);
-
-// Mouse events for dragging
-slider.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startX = e.pageX - slider.offsetLeft;
-    slider.style.cursor = 'grabbing';
-});
-
-slider.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) / slider.offsetWidth * 100;
-    slider.style.transition = 'none';
-    slider.style.transform = `translateX(${-(currentIndex + 1) * testimonialWidth + walk}%)`;
-});
-
-slider.addEventListener('mouseup', finishDragging);
-slider.addEventListener('mouseleave', finishDragging);
-
-function finishDragging(e) {
-    if (!isDragging) return;
-    isDragging = false;
-    slider.style.cursor = 'grab';
-    const x = e.type === 'mouseup' ? e.pageX : e.changedTouches[0].pageX;
-    const walk = (x - startX) / slider.offsetWidth * 100;
-    if (Math.abs(walk) > 10) {
-        if (walk > 0) {
-            slide(-1);
-        } else {
-            slide(1);
-        }
-    } else {
-        updateSliderPosition(true);
-    }
-}
-
-// Touch events for mobile devices
-slider.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    startX = e.touches[0].pageX - slider.offsetLeft;
-});
-
-slider.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const x = e.touches[0].pageX - slider.offsetLeft;
-    const walk = (x - startX) / slider.offsetWidth * 100;
-    slider.style.transition = 'none';
-    slider.style.transform = `translateX(${-(currentIndex + 1) * testimonialWidth + walk + 10}%)`;
-});
-
-slider.addEventListener('touchend', finishDragging);
+    
+    console.log("Initializing carousel");
+    
+    $carousel.owlCarousel({
+      items: 4,
+      loop: true,
+      margin: 30,
+      autoplay: true,
+      autoplayTimeout: 3000,
+      autoplayHoverPause: true,
+      responsive: {
+        0: { items: 1 },
+        600: { items: 2 },
+        1000: { items: 2 }
+      },
+      onInitialized: function() {
+        console.log("Carousel initialized callback");
+      },
+      onTranslated: function() {
+        console.log("Slide changed");
+      }
+    });
+    
+    console.log("Carousel initialized");
+    
+    // Force autoplay to start
+    $carousel.trigger('play.owl.autoplay', [3000]);
+    
+    console.log("Autoplay triggered");
+    
+    // Attempt to force a slide change
+    setTimeout(function() {
+      console.log("Forcing next slide");
+      $carousel.trigger('next.owl.carousel');
+    }, 1000);
+    
+    // Check carousel state every second
+    setInterval(function() {
+      var totalItems = $carousel.find('.owl-item').length;
+      var currentIndex = $carousel.find('.owl-item.active').index();
+      console.log("Current slide index: " + currentIndex + " / Total items: " + totalItems);
+    }, 1000);
+  });
